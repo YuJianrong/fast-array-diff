@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "4"
+before_script: npm run clean
+script: npm run build
+# before_deply: npm run clean-test
+# deploy:

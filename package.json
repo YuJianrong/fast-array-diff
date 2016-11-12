@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
   "main": "./dist/main.js",
-  "browser": "",
   "scripts": {
     "clean": "rm -rf dist; rm -rf coverage",
     "clean-test": "rm -rf dist/test",
