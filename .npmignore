@@ -1,0 +1,9 @@
+node_modules
+src
+coverage
+dist/test
+gulpfile.js
+*.log
+tsconfig.json
+tslint.json
+.npmrc
