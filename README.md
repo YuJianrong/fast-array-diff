@@ -1,23 +1,26 @@
-array-diff
+fast-array-diff
 ======================
 
-```array-diff``` is a npm module to find the common and different parts of two array, it based on the solution of LCS (Longest common subsequence) problems, widely used in diff/patch of two arrays.
+```fast-array-diff``` is a npm module to find the common or different parts of two array, it based on the solution of LCS (Longest common subsequence) problems, widely used in diff/patch of two arrays (like diff/patch feature in git).
 
-The algorithm of this module is based on the paper "An O(ND) Difference Algorithm and its Variations" by Eugene Myers, Algorithm Vol. 1 No. 2, 1986, pp. 251-266. The difference of this implementation to the implementation of npm module [diff](https://www.npmjs.com/package/diff) is: the space complexity of this implementation is O(N), while the implementation of ```diff``` is O(ND), so this implementation will cost less memory on large data sets. Note: although the time complexity of the implementations are both O(ND), this implementation run slower than the ```diff```.
+The algorithm of this module is implemented based on the paper "An O(ND) Difference Algorithm and its Variations" by Eugene Myers, Algorithm Vol. 1 No. 2, 1986, pp. 251-266. The difference of this implementation to the implementation of npm module [diff](https://www.npmjs.com/package/diff) is: the space complexity of this implementation is O(N), while the implementation of ```diff``` is O(ND), so this implementation will cost less memory on large data set. Note: although the time complexity of the implementations are both O(ND), this implementation run slower than the ```diff```.
 
 Installation
 ---------------------
 
-    TODO;
+You can install the module via ```npm```:
 
+```bash
+npm install fast-array-diff
+```
 
 API
 ----------------------
 * `same(arrayOld, arrayNew, compareFunc?)` - get the LCS of the two arrays.
 
-     Return a list of the common subsequence. Like: ```[1,2,3]```
+    Return a list of the common subsequence. Like: ```[1,2,3]```
 
-  Note: The parameter `compareFunc` is optional, `===` will be used if no compare function supplied.
+    *Note: The parameter `compareFunc` is optional, `===` will be used if no compare function supplied.*
 
 * `diff(arrayOld, arrayNew, compareFunc?)` - get the difference the two array.
 
@@ -33,7 +36,59 @@ API
 Examples
 ----------------------
 
-    TODO:
+Example for ```same``` on array of number:
+
+```js
+var diff = require("fast-array-diff");
+
+console.log( diff.same([1, 2, 3, 4], [2, 1, 4]));
+// Output: [2, 4]
+```
+
+Example for ```diff``` on array of Object with a compare function
+
+```js
+var diff = require("fast-array-diff");
+
+function compare(personA, personB) {
+    return personA.firstName === personB.firstName && personA.lastName === personB.lastName;
+}
+
+var result = diff.diff([
+        {
+            firstName: "Foo",
+            lastName: "Bar"
+        },
+        {
+            firstName: "Apple",
+            lastName: "Banana"
+        },
+        {
+            firstName: "Foo",
+            lastName: "Bar"
+        }
+    ], [
+        {
+            firstName: "Apple",
+            lastName: "Banana"
+        },
+        {
+            firstName: "Square",
+            lastName: "Triangle"
+        }
+    ],
+    compare
+);
+
+// Result is :
+// {
+//    removed:[
+//        { firstName: 'Foo', lastName: 'Bar' },
+//        { firstName: 'Foo', lastName: 'Bar' } 
+//    ],
+//    added: [ { firstName: 'Square', lastName: 'Triangle' } ] 
+// }
+```
 
 ## License
 

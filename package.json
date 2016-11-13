@@ -2,7 +2,11 @@
   "name": "fast-array-diff",
   "version": "0.1.1",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
-  "main": "./dist/main.js",
+  "homepage": "https://github.com/YuJianrong/fast-array-diff",
+  "bugs": {
+    "url": "https://github.com/YuJianrong/fast-array-diff/issues"
+  },
+  "main": "./dist/index.js",
   "scripts": {
     "clean": "rm -rf dist; rm -rf coverage",
     "clean-test": "rm -rf dist/test",
