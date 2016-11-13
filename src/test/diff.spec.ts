@@ -26,6 +26,7 @@ describe("Diff", () => {
     diff_str("", "", "", "");
     diff_str("a", "", "", "a");
     diff_str("", "b", "b", "");
+    diff_str("abcd", "e", "e", "abcd");
     diff_str("abc", "abc", "", "");
     diff_str("abcd", "obce", "oe", "ad");
     diff_str("abc", "ab", "", "c");

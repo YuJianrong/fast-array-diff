@@ -25,6 +25,7 @@ describe("Same", () => {
     assert.deepStrictEqual(same_str("", ""), "");
     assert.deepStrictEqual(same_str("a", ""), "");
     assert.deepStrictEqual(same_str("", "b"), "");
+    assert.deepStrictEqual(same_str("abcd", "e"), "");
     assert.deepStrictEqual(same_str("abc", "abc"), "abc");
     assert.deepStrictEqual(same_str("abcd", "obce"), "bc");
     assert.deepStrictEqual(same_str("abc", "ab"), "ab");
