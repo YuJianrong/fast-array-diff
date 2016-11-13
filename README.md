@@ -60,27 +60,12 @@ function compare(personA, personB) {
 }
 
 var result = diff.diff([
-        {
-            firstName: "Foo",
-            lastName: "Bar"
-        },
-        {
-            firstName: "Apple",
-            lastName: "Banana"
-        },
-        {
-            firstName: "Foo",
-            lastName: "Bar"
-        }
+        { firstName: "Foo", lastName: "Bar" },
+        { firstName: "Apple",  lastName: "Banana" },
+        { firstName: "Foo", lastName: "Bar" }
     ], [
-        {
-            firstName: "Apple",
-            lastName: "Banana"
-        },
-        {
-            firstName: "Square",
-            lastName: "Triangle"
-        }
+        { firstName: "Apple", lastName: "Banana" },
+        { firstName: "Square", lastName: "Triangle" }
     ],
     compare
 );
@@ -93,6 +78,19 @@ var result = diff.diff([
 //    ],
 //    added: [ { firstName: 'Square', lastName: 'Triangle' } ] 
 // }
+```
+
+TypeScript
+----------------------
+This module is written in [TypeScript](https://www.typescriptlang.org/), you can import it directly in TypeScript and get the benefit of static type checking and auto-complete of IDE. 
+
+```typescript
+import * as diff from "fast-array-diff";
+
+console.log( diff.same([1,2,3], [2,3,4]));
+
+let result: diff.DiffData<number> = diff.diff([1, 2], [2, 3]);
+// Note: DiffData is the interface of the difference result.
 ```
 
 ## License
