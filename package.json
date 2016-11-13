@@ -1,6 +1,6 @@
 {
-  "name": "array-diff",
-  "version": "0.1.0",
+  "name": "fast-array-diff",
+  "version": "0.1.1",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
   "main": "./dist/main.js",
   "scripts": {

@@ -1,7 +1,12 @@
 language: node_js
 node_js:
-  - "4"
+- '4'
 before_script: npm run clean
 script: npm run build
-# before_deply: npm run clean-test
-# deploy:
+after_success: npm test
+before_deply: npm run clean-test
+deploy:
+  provider: npm
+  skip_cleanup: true
+  api_key:
+    secure: Ie2o0OvCXn2ZFmqB0y784DFmSiAwo/8r6falAuzsfmRsNXHWTofAFOFR0WCb3R+RxXAJGfGPhuyb56QEHENb3yV6RtNYR22hla5TlaVXhR/dLOaa2qfyyeaZ6YU5S510uURrTIbQLbtuTXDSb1NQnL3shRcH5ZefC/7mXCUQXowh4VfRxxABqnmuII67B+fPk/QrV1WlrOQ5b9Q7irIyJ1oDSEvkwhx3hKtXyVieLb23t2CqSZb4uUA3Avfa92e7GuiBF8HV2UvYuV0EoTR2IIUdRyiNdIwFu2tBkoat45hZoESXxwk+NYmLffcRGWLmvM6xuztk2PWoP/sWcpS2bvnXjn2hHSYlaFosf2HN8Q603UNI4dJH5WEk1WTk9yzBuHeC3KXRHOWIBFWAYOW+y4xKd51INYSFSeLxTX5XFSmgKJtCGr3E0dxcgJADE7f8jMKKEmUMZd6R6m1FheKk7i6aBd3NoREouonu/LI5sgdjlfzj99ba1REdpmNa1meBpSpNclpsQ/PVsvWxE6Ul4vB0nZsi0yQQN/QMeLfvJq88VSzwa9VJ3d5wkQN0zq41zVBeyM67mpGdffKKo+wBs1SJi2ZW+N46zRgK5xYBaS/2t8MEVXRmAh2iauWITVd3qy8JzqrBFg0OrR9SCmSIFT3PzSJNlpoxLJLQrsLVj78=
