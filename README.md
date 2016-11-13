@@ -1,5 +1,10 @@
 fast-array-diff
 ======================
+[![Build Status](https://travis-ci.org/YuJianrong/fast-array-diff.svg?branch=master)](https://travis-ci.org/YuJianrong/fast-array-diff)
+[![Coverage Status](https://coveralls.io/repos/github/YuJianrong/fast-array-diff/badge.svg?branch=master)](https://coveralls.io/github/YuJianrong/fast-array-diff?branch=master)
+[![npm version](https://badge.fury.io/js/fast-array-diff.svg)](https://badge.fury.io/js/fast-array-diff)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://www.typescriptlang.org/)
 
 ```fast-array-diff``` is a npm module to find the common or different parts of two array, it based on the solution of LCS (Longest common subsequence) problems, widely used in diff/patch of two arrays (like diff/patch feature in git).
 
