@@ -11,3 +11,4 @@ tslint.json
 .travis.yml
 .gitignore
 .vscode
+umd

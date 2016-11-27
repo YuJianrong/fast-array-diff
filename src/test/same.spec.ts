@@ -18,10 +18,77 @@ describe("Same", () => {
     assert.deepStrictEqual(same([true, false], [false, false]), [false]);
   });
 
+  it("Random Check", function() {
+
+    this.timeout(100 * 1000);
+
+    function lcs(a: number[], b: number[]): number[] {
+      let s = Array(a.length + 1);
+      for (let i = 0; i <= a.length; ++i) {
+        s[i] = Array(b.length + 1);
+        s[i][0] = { len: 0 };
+      }
+      for (let i = 0; i <= b.length; ++i) {
+        s[0][i] = { len: 0 };
+      }
+      for (let i = 1; i <= a.length; ++i) {
+        for (let j = 1; j <= b.length; ++j) {
+          if (a[i - 1] === b[j - 1]) {
+            let v = s[i - 1][j - 1].len + 1;
+            s[i][j] = { len: v, direct: [-1, -1] };
+          } else {
+            let v1 = s[i - 1][j].len;
+            let v2 = s[i][j - 1].len;
+            if (v1 > v2) {
+              s[i][j] = { len: v1, direct: [-1, 0] };
+            } else {
+              s[i][j] = { len: v2, direct: [0, -1] };
+            }
+          }
+        }
+      }
+      let n = a.length, m = b.length;
+      let ret: number[] = [];
+      while (s[n][m].len !== 0) {
+        let node = s[n][m];
+        if (node.direct[0] === node.direct[1]) {
+          ret.push(a[n - 1]);
+        }
+        n += node.direct[0];
+        m += node.direct[1];
+      }
+      return ret.reverse();
+    }
+
+    function getRandom(): number[] {
+      let length = Math.floor(Math.random() * 20 + 2);
+      return Array(length).fill(0).map(() => Math.floor(Math.random() * 10));
+    }
+
+    function isSubSeq(main: number[], sub: number[]): boolean {
+      let i = 0;
+      main.forEach(n => i += n === sub[i] ? 1 : 0);
+      return i === sub.length;
+    }
+
+    for (let i = 0; i < 5000; ++i) {
+      let arr1 = getRandom(), arr2 = getRandom();
+      let lcsResult = lcs(arr1, arr2), sameResult = same(arr1, arr2);
+      assert.strictEqual(lcsResult.length, sameResult.length,
+                  `[${arr1}] <=> [${arr2}], correct: [${lcsResult}], incorrect: [${sameResult}]`);
+      assert.strictEqual(isSubSeq(arr1, sameResult) && isSubSeq(arr2, sameResult), true);
+    }
+
+  });
+
   it("Functional Check", () => {
     function same_str(a: string, b: string): string {
       return same(a.split(""), b.split("")).join("");
     }
+
+    assert.deepStrictEqual(same_str("846709", "2798"), "79");
+    assert.deepStrictEqual(same_str("5561279", "597142"), "512");
+
     assert.deepStrictEqual(same_str("", ""), "");
     assert.deepStrictEqual(same_str("a", ""), "");
     assert.deepStrictEqual(same_str("", "b"), "");

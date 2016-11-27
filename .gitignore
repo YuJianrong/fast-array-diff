@@ -27,3 +27,4 @@ jspm_packages
 dist*
 .vscode/launch.json
 .npmrc
+umd

@@ -16,16 +16,18 @@ export function diff<T>(
   };
   lcs(
     a, 0, a.length, b, 0, b.length, compareFunc,
-    (arr, start, end) => {
-      for (let i = start; i < end; ++i) {
-        ret.added.push(arr[i]);
+    (type, oldArr, oldStart, oldEnd, newArr, newStart, newEnd) => {
+      if (type === "add") {
+      for (let i = newStart; i < newEnd; ++i) {
+        ret.added.push(newArr[i]);
       }
-    },
-    (arr, start, end) => {
-      for (let i = start; i < end; ++i) {
-        ret.removed.push(arr[i]);
+      } else if (type === "remove") {
+      for (let i = oldStart; i < oldEnd; ++i) {
+        ret.removed.push(oldArr[i]);
+      }
       }
     }
+    // (arr, start, end) => {
   );
   return ret;
 

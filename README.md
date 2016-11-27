@@ -38,6 +38,17 @@ API
 }
 ```
 
+* `editScript(arrayOld, arrayNew, compareFunc?)` - get the edit script which transform from old array to the new.
+
+    Return an array of edit action. Like this:
+
+```js
+[
+    { type: "remove", oldPos: 0, newPos: 0, items: [1] },
+    { type: "add", oldPos: 3, newPos: 2, items: [4] },
+]
+```
+
 Examples
 ----------------------
 
@@ -53,8 +64,6 @@ console.log( diff.same([1, 2, 3, 4], [2, 1, 4]));
 Example for ```diff``` on array of Object with a compare function
 
 ```js
-var diff = require("fast-array-diff");
-
 function compare(personA, personB) {
     return personA.firstName === personB.firstName && personA.lastName === personB.lastName;
 }
@@ -80,6 +89,18 @@ var result = diff.diff([
 // }
 ```
 
+Example for ```editScript``` on array of number:
+
+```js
+var es = diff.editScript([1, 2, 3], [2, 3, 4]);
+
+// Result is:
+// [
+//     { type: "remove", oldPos: 0, newPos: 0, items: [1] },
+//     { type: "add", oldPos: 3, newPos: 2, items: [4] },
+// ]
+```
+
 TypeScript
 ----------------------
 This module is written in [TypeScript](https://www.typescriptlang.org/), you can import it directly in TypeScript and get the benefit of static type checking and auto-complete of IDE. 
@@ -96,3 +117,9 @@ let result: diff.DiffData<number> = diff.diff([1, 2], [2, 3]);
 ## License
 
 This module is licensed under MIT.
+
+#### Changelog
+0.1.6:
+
+* Add ```editScript``` function
+* Fix a bug on lcs function which casue the solution not the best one.

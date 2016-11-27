@@ -26,12 +26,17 @@ describe("Diff", () => {
     diff_str("", "", "", "");
     diff_str("a", "", "", "a");
     diff_str("", "b", "b", "");
+    diff_str("@@@abcdefxzxzxzxzxz9090909090909090990", "#abcdef###xzxzxzxzxz9090909090909090990", "####", "@@@");
+    diff_str("#12345###xzxzxzxzxz9090909090909090990", "@@@12345xzxzxzxzxz9090909090909090990", "@@@", "####");
     diff_str("abcd", "e", "e", "abcd");
+    diff_str("abced", "e", "", "abcd");
     diff_str("abc", "abc", "", "");
     diff_str("abcd", "obce", "oe", "ad");
     diff_str("abc", "ab", "", "c");
     diff_str("cab", "ab", "", "c");
     diff_str("abc", "bc", "", "a");
+    diff_str("12345abcdefg", "6789abc", "6789", "12345defg");
+    diff_str("12345abc", "6789abcdefg", "6789defg", "12345");
     diff_str("abcde", "zbodf", "zof", "ace");
     diff_str("bcd", "bod", "o", "c");
     diff_str("aa", "aaaa", "aa", "");

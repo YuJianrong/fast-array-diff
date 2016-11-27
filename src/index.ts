@@ -4,3 +4,4 @@ export * from "./diff/diff";
 export {
   same
 }
+export * from "./diff/editScript";

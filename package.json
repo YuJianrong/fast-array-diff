@@ -1,6 +1,6 @@
 {
   "name": "fast-array-diff",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
   "homepage": "https://github.com/YuJianrong/fast-array-diff",
   "bugs": {
@@ -10,14 +10,15 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist; rm -rf coverage",
+    "clean": "rm -rf dist; rm -rf coverage; rm -rf dist_map",
     "clean-test": "rm -rf dist/test",
     "prebuild": "npm run clean",
     "build": "tsc",
     "tslint": "tslint --project='tsconfig.json'",
     "test": "mocha dist/test/*.spec.js",
     "coverage": "tsc --sourceMap --outDir dist_map && istanbul cover node_modules/.bin/_mocha -- dist_map/test/*.spec.js",
-    "browserify": "mkdir umd; browserify dist/index.js -s array-diff -o umd/array-diff.js"
+    "browserify": "mkdir umd; browserify dist/index.js -s array-diff -o umd/array-diff.js",
+    "debug": "npm run build && npm run test -- --debug-brk"
   },
   "keywords": [
     "array",
