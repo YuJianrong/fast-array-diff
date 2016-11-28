@@ -1,19 +1,20 @@
-import * as es from "../diff/editScript";
+import * as es from "../diff/patch";
 import * as assert from "assert";
 
 /**
  * Test for same function
  */
-describe("Edit Script", () => {
+describe("Get Patch", () => {
+
   it("Array not modified by function", () => {
     let a: number[] = [1, 2, 3], b: number[] = [2, 3, 4];
-    es.editScript(a, b);
+    es.getPatch(a, b);
     assert.deepStrictEqual(a, [1, 2, 3], "input array changed!");
     assert.deepStrictEqual(b, [2, 3, 4], "input array changed!");
   });
 
   it("Functional test", () => {
-    function add(oldPos: number, newPos: number, str: string): es.EditItem<string> {
+    function add(oldPos: number, newPos: number, str: string): es.PatchItem<string> {
       return {
         type: "add",
         oldPos,
@@ -21,7 +22,7 @@ describe("Edit Script", () => {
         items: str.split(""),
       };
     }
-    function remove(oldPos: number, newPos: number, str: string): es.EditItem<string> {
+    function remove(oldPos: number, newPos: number, str: string): es.PatchItem<string> {
       return {
         type: "remove",
         oldPos,
@@ -29,9 +30,9 @@ describe("Edit Script", () => {
         items: str.split(""),
       };
     }
-    function es_str(a: string, b: string, script: es.EditScript<string>, msg?: string) {
+    function es_str(a: string, b: string, script: es.Patch<string>, msg?: string) {
       assert.deepStrictEqual(
-        es.editScript(a.split(""), b.split("")),
+        es.getPatch(a.split(""), b.split("")),
         script,
         msg
       );
@@ -55,12 +56,24 @@ describe("Edit Script", () => {
     es_str("aaaa", "aa", [remove(2, 2, "aa")], "aaaa -> aa");
     es_str("TGGT", "GG", [remove(0, 0, "T"), remove(3, 2, "T")], "TGGT -> GG");
     // debugger;
-    // es_str(
-    //   "G", "AGG", [
-    //     add(0, 0, "AG"),
-    //   ]);
+    es_str(
+      "G", "AGG", [
+        add(0, 0, "AG"),
+      ]);
 
-    // debugger;
+    es_str(
+      "GTCGTTCGGAATGCCGTTGCTCTGTAAA", "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA", [
+        add(0, 0, "ACCG"),
+        add(3, 7, "GA"),
+        remove(5, 13, "T"),
+        add(6, 11, "GCG"),
+        remove(11, 19, "T"),
+        remove(16, 23, "TT"),
+        remove(20, 25, "T"),
+        remove(22, 26, "T"),
+        remove(24, 27, "TA"),
+      ], "GTCGTTCGGAATGCCGTTGCTCTGTAAA");
+
     // es_str(
     //   "GTCGTTCGGAATGCCGTTGCTCTGTAAA", "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA", [
     //     add(0, 0, "ACCG"),

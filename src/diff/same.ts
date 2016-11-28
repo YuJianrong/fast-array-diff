@@ -1,11 +1,10 @@
-import lcs from "./lcs";
+import bestSubSequence from "./lcs";
 
 export default function <T>(
-  a: T[], b: T[],
-  compareFunc: ((ia: T, ib: T) => boolean) = ((ia: T, ib: T) => ia === ib)): T[] {
+  a: T[], b: T[], compareFunc: ((ia: T, ib: T) => boolean) = ((ia: T, ib: T) => ia === ib)): T[] {
   let ret: T[] = [];
-  lcs(
-    a, 0, a.length, b, 0, b.length, compareFunc,
+  bestSubSequence(
+    a, b, compareFunc,
     (type, oldArr, oldStart, oldEnd) => {
       if (type === "same") {
         for (let i = oldStart; i < oldEnd; ++i) {

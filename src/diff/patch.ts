@@ -1,21 +1,21 @@
 
-import lcs from "./lcs";
+import bestSubSequence from "./lcs";
 
-export interface EditItem<T> {
+export interface PatchItem<T> {
   type: "add" | "remove";
   oldPos: number;
   newPos: number;
   items: T[];
 }
 
-export type EditScript<T> = EditItem<T>[];
+export type Patch<T> = PatchItem<T>[];
 
-export function editScript<T>(
+export function getPatch<T>(
   a: T[], b: T[],
-  compareFunc: ((ia: T, ib: T) => boolean) = ((ia: T, ib: T) => ia === ib)): EditScript<T> {
-  let editScript: EditScript<T> = [];
-  let lastAdd: EditItem<T> | null = null;
-  let lastRemove: EditItem<T> | null = null;
+  compareFunc: ((ia: T, ib: T) => boolean) = ((ia: T, ib: T) => ia === ib)): Patch<T> {
+  let patch: Patch<T> = [];
+  let lastAdd: PatchItem<T> | null = null;
+  let lastRemove: PatchItem<T> | null = null;
 
   function pushChange(
     type: "add" | "remove" | "same",
@@ -23,10 +23,10 @@ export function editScript<T>(
     newArr: T[], newStart: number, newEnd: number) {
     if (type === "same") {
       if (lastRemove) {
-        editScript.push(lastRemove);
+        patch.push(lastRemove);
       }
       if (lastAdd) {
-        editScript.push(lastAdd);
+        patch.push(lastAdd);
       }
       lastRemove = null;
       lastAdd = null;
@@ -63,9 +63,9 @@ export function editScript<T>(
     }
   }
 
-  lcs(a, 0, a.length, b, 0, b.length, compareFunc, pushChange);
+  bestSubSequence(a, b, compareFunc, pushChange);
 
   pushChange("same", [], 0, 0, [], 0, 0);
 
-  return editScript;
+  return patch;
 }

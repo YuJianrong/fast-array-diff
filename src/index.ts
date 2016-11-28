@@ -4,4 +4,7 @@ export * from "./diff/diff";
 export {
   same
 }
-export * from "./diff/editScript";
+
+export * from "./diff/patch";
+
+export * from "./diff/apply";

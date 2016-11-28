@@ -1,5 +1,5 @@
 
-import lcs from "./lcs";
+import bestSubSequence from "./lcs";
 
 export interface DiffData<T> {
   removed: T[];
@@ -14,8 +14,8 @@ export function diff<T>(
     removed: [],
     added: [],
   };
-  lcs(
-    a, 0, a.length, b, 0, b.length, compareFunc,
+  bestSubSequence(
+    a, b, compareFunc,
     (type, oldArr, oldStart, oldEnd, newArr, newStart, newEnd) => {
       if (type === "add") {
       for (let i = newStart; i < newEnd; ++i) {

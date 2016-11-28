@@ -21,13 +21,13 @@ npm install fast-array-diff
 
 API
 ----------------------
-* `same(arrayOld, arrayNew, compareFunc?)` - get the LCS of the two arrays.
+* `same(arrayOld, arrayNew, compareFunc?)` - Get the LCS of the two arrays.
 
     Return a list of the common subsequence. Like: ```[1,2,3]```
 
     *Note: The parameter `compareFunc` is optional, `===` will be used if no compare function supplied.*
 
-* `diff(arrayOld, arrayNew, compareFunc?)` - get the difference the two array.
+* `diff(arrayOld, arrayNew, compareFunc?)` - Get the difference the two array.
 
     Return an object of the difference. Like this:
 
@@ -38,7 +38,7 @@ API
 }
 ```
 
-* `editScript(arrayOld, arrayNew, compareFunc?)` - get the edit script which transform from old array to the new.
+* `getPatch(arrayOld, arrayNew, compareFunc?)` - Get the patch array which transform from old array to the new.
 
     Return an array of edit action. Like this:
 
@@ -46,6 +46,20 @@ API
 [
     { type: "remove", oldPos: 0, newPos: 0, items: [1] },
     { type: "add", oldPos: 3, newPos: 2, items: [4] },
+]
+```
+
+
+* `applyPatch(arrayOld, patchArray)` - Thansform the old array to the new from the input patch array
+
+    Return the new Array. The input value format can be same of return value of ```getPatch```, and for the ```remove``` type,
+    the ```items``` can be replaced to ```length``` value which is number.
+
+```js
+[
+    { type: "remove", oldPos: 0, newPos: 0, items: [1] },
+    { type: "add", oldPos: 3, newPos: 2, items: [4] },
+    { type: "remove", oldPos: 5, newPos: 3, length: 3 },
 ]
 ```
 
@@ -89,10 +103,10 @@ var result = diff.diff([
 // }
 ```
 
-Example for ```editScript``` on array of number:
+Example for ```getPatch``` on array of number:
 
 ```js
-var es = diff.editScript([1, 2, 3], [2, 3, 4]);
+var es = diff.getPatch([1, 2, 3], [2, 3, 4]);
 
 // Result is:
 // [
@@ -100,6 +114,19 @@ var es = diff.editScript([1, 2, 3], [2, 3, 4]);
 //     { type: "add", oldPos: 3, newPos: 2, items: [4] },
 // ]
 ```
+
+Example for ```applyPatch```:
+
+```js
+var arr = diff.applyPatch([1, 2, 3], [
+    { type: "remove", oldPos: 0, newPos: 0, length: 1 },
+    { type: "add", oldPos: 3, newPos: 2, items: [4] },
+]);
+
+// Result is:
+// [2, 3, 4]
+```
+
 
 TypeScript
 ----------------------
@@ -119,6 +146,12 @@ let result: diff.DiffData<number> = diff.diff([1, 2], [2, 3]);
 This module is licensed under MIT.
 
 #### Changelog
+0.2.0:
+
+* Change the function ```editScript``` to ```getPatch```
+* Add function ```applyPatch```
+* Change the algorithm to get a better patch, but slower than the old implementation.
+
 0.1.6:
 
 * Add ```editScript``` function
