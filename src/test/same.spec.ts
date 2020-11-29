@@ -1,30 +1,29 @@
-import same from "../diff/same";
-import * as assert from "assert";
+import same from '../diff/same';
+import * as assert from 'assert';
 
 /**
  * Test for same function
  */
-describe("Same", () => {
-
-  it("Array not modified by function", () => {
-    let a: number[] = [1, 2, 3], b: number[] = [2, 3, 4];
+describe('Same', () => {
+  it('Array not modified by function', () => {
+    const a: number[] = [1, 2, 3],
+      b: number[] = [2, 3, 4];
     same(a, b);
-    assert.deepStrictEqual(a, [1, 2, 3], "input array changed!");
-    assert.deepStrictEqual(b, [2, 3, 4], "input array changed!");
+    assert.deepStrictEqual(a, [1, 2, 3], 'input array changed!');
+    assert.deepStrictEqual(b, [2, 3, 4], 'input array changed!');
   });
 
-  it("Different Type Check", () => {
+  it('Different Type Check', () => {
     assert.deepStrictEqual(same([1, 2, 3], [2, 3, 4]), [2, 3]);
-    assert.deepStrictEqual(same(["1", "2", "3"], ["2", "3", "4"]), ["2", "3"]);
+    assert.deepStrictEqual(same(['1', '2', '3'], ['2', '3', '4']), ['2', '3']);
     assert.deepStrictEqual(same([true, false], [false, false]), [false]);
   });
 
-  it.skip("Random Check", function() {
-
+  it.skip('Random Check', function () {
     this.timeout(100 * 1000);
 
     function lcs(a: number[], b: number[]): number[] {
-      let s = Array(a.length + 1);
+      const s = Array(a.length + 1);
       for (let i = 0; i <= a.length; ++i) {
         s[i] = Array(b.length + 1);
         s[i][0] = { len: 0 };
@@ -35,11 +34,11 @@ describe("Same", () => {
       for (let i = 1; i <= a.length; ++i) {
         for (let j = 1; j <= b.length; ++j) {
           if (a[i - 1] === b[j - 1]) {
-            let v = s[i - 1][j - 1].len + 1;
+            const v = s[i - 1][j - 1].len + 1;
             s[i][j] = { len: v, direct: [-1, -1] };
           } else {
-            let v1 = s[i - 1][j].len;
-            let v2 = s[i][j - 1].len;
+            const v1 = s[i - 1][j].len;
+            const v2 = s[i][j - 1].len;
             if (v1 > v2) {
               s[i][j] = { len: v1, direct: [-1, 0] };
             } else {
@@ -48,10 +47,11 @@ describe("Same", () => {
           }
         }
       }
-      let n = a.length, m = b.length;
-      let ret: number[] = [];
+      let n = a.length,
+        m = b.length;
+      const ret: number[] = [];
       while (s[n][m].len !== 0) {
-        let node = s[n][m];
+        const node = s[n][m];
         if (node.direct[0] === node.direct[1]) {
           ret.push(a[n - 1]);
         }
@@ -62,55 +62,65 @@ describe("Same", () => {
     }
 
     function getRandom(): number[] {
-      let length = Math.floor(Math.random() * 20 + 2);
-      return Array(length).fill(0).map(() => Math.floor(Math.random() * 10));
+      const length = Math.floor(Math.random() * 20 + 2);
+      return Array(length)
+        .fill(0)
+        .map(() => Math.floor(Math.random() * 10));
     }
 
     function isSubSeq(main: number[], sub: number[]): boolean {
       let i = 0;
-      main.forEach(n => i += n === sub[i] ? 1 : 0);
+      main.forEach((n) => (i += n === sub[i] ? 1 : 0));
       return i === sub.length;
     }
 
     for (let i = 0; i < 5000; ++i) {
-      let arr1 = getRandom(), arr2 = getRandom();
-      let lcsResult = lcs(arr1, arr2), sameResult = same(arr1, arr2);
-      assert.strictEqual(lcsResult.length, sameResult.length,
-                  `[${arr1}] <=> [${arr2}], correct: [${lcsResult}], incorrect: [${sameResult}]`);
+      const arr1 = getRandom(),
+        arr2 = getRandom();
+      const lcsResult = lcs(arr1, arr2),
+        sameResult = same(arr1, arr2);
+      assert.strictEqual(
+        lcsResult.length,
+        sameResult.length,
+        `[${arr1}] <=> [${arr2}], correct: [${lcsResult}], incorrect: [${sameResult}]`,
+      );
       assert.strictEqual(isSubSeq(arr1, sameResult) && isSubSeq(arr2, sameResult), true);
     }
-
   });
 
-  it("Functional Check", () => {
+  it('Functional Check', () => {
     function same_str(a: string, b: string): string {
-      return same(a.split(""), b.split("")).join("");
+      return same(a.split(''), b.split('')).join('');
     }
 
-    assert.deepStrictEqual(same_str("846709", "2798"), "79");
-    assert.deepStrictEqual(same_str("5561279", "597142"), "512");
+    assert.deepStrictEqual(same_str('846709', '2798'), '79');
+    assert.deepStrictEqual(same_str('5561279', '597142'), '512');
 
-    assert.deepStrictEqual(same_str("", ""), "");
-    assert.deepStrictEqual(same_str("a", ""), "");
-    assert.deepStrictEqual(same_str("", "b"), "");
-    assert.deepStrictEqual(same_str("abcd", "e"), "");
-    assert.deepStrictEqual(same_str("abc", "abc"), "abc");
-    assert.deepStrictEqual(same_str("abcd", "obce"), "bc");
-    assert.deepStrictEqual(same_str("abc", "ab"), "ab");
-    assert.deepStrictEqual(same_str("cab", "ab"), "ab");
-    assert.deepStrictEqual(same_str("abc", "bc"), "bc");
-    assert.deepStrictEqual(same_str("abcde", "zbodf"), "bd");
-    assert.deepStrictEqual(same_str("bcd", "bod"), "bd");
-    assert.deepStrictEqual(same_str("aa", "aaaa"), "aa");
-    assert.deepStrictEqual(same_str("aaaa", "aa"), "aa");
-    assert.deepStrictEqual(same_str("TGGT", "GG"), "GG");
-    assert.deepStrictEqual(same_str("GTCGTTCGGAATGCCGTTGCTCTGTAAA", "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA"),
-     "GTCGTCGGAAGCCGGCCGAA");
-    assert.deepStrictEqual(same_str("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    "ABCDEFGHIJKL12345678901234567890MNOPQRSTUVWXYZ"), "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    assert.deepStrictEqual(same_str('', ''), '');
+    assert.deepStrictEqual(same_str('a', ''), '');
+    assert.deepStrictEqual(same_str('', 'b'), '');
+    assert.deepStrictEqual(same_str('abcd', 'e'), '');
+    assert.deepStrictEqual(same_str('abc', 'abc'), 'abc');
+    assert.deepStrictEqual(same_str('abcd', 'obce'), 'bc');
+    assert.deepStrictEqual(same_str('abc', 'ab'), 'ab');
+    assert.deepStrictEqual(same_str('cab', 'ab'), 'ab');
+    assert.deepStrictEqual(same_str('abc', 'bc'), 'bc');
+    assert.deepStrictEqual(same_str('abcde', 'zbodf'), 'bd');
+    assert.deepStrictEqual(same_str('bcd', 'bod'), 'bd');
+    assert.deepStrictEqual(same_str('aa', 'aaaa'), 'aa');
+    assert.deepStrictEqual(same_str('aaaa', 'aa'), 'aa');
+    assert.deepStrictEqual(same_str('TGGT', 'GG'), 'GG');
+    assert.deepStrictEqual(
+      same_str('GTCGTTCGGAATGCCGTTGCTCTGTAAA', 'ACCGGTCGAGTGCGCGGAAGCCGGCCGAA'),
+      'GTCGTCGGAAGCCGGCCGAA',
+    );
+    assert.deepStrictEqual(
+      same_str('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'ABCDEFGHIJKL12345678901234567890MNOPQRSTUVWXYZ'),
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    );
   });
 
-  it("Customize compare function", () => {
+  it('Customize compare function', () => {
     interface CustomObj {
       name: string;
       age: number;
@@ -118,10 +128,20 @@ describe("Same", () => {
     function compare(a: CustomObj, b: CustomObj) {
       return a.name === b.name && a.age === b.age;
     }
-    let a: CustomObj[] = [{name: "Mike", age: 10}, {name: "Apple", age: 13}, {name: "Jack", age: 15}],
-      b: CustomObj[] = [{name: "Apple", age: 13}, {name: "Mimi", age: 0}, {name: "Jack", age: 15}],
-      result: CustomObj[] = [{name: "Apple", age: 13}, {name: "Jack", age: 15}];
+    const a: CustomObj[] = [
+        { name: 'Mike', age: 10 },
+        { name: 'Apple', age: 13 },
+        { name: 'Jack', age: 15 },
+      ],
+      b: CustomObj[] = [
+        { name: 'Apple', age: 13 },
+        { name: 'Mimi', age: 0 },
+        { name: 'Jack', age: 15 },
+      ],
+      result: CustomObj[] = [
+        { name: 'Apple', age: 13 },
+        { name: 'Jack', age: 15 },
+      ];
     assert.deepStrictEqual(same(a, b, compare), result);
   });
-
 });

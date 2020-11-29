@@ -1,24 +1,23 @@
-/* tslint:disable: no-bitwise */
-
-function lcs<T>( a: T[], b: T[], compareFunc: (a: T, b: T) => boolean ): number {
-  const M = a.length, N = b.length;
+function lcs<T>(a: T[], b: T[], compareFunc: (a: T, b: T) => boolean): number {
+  const M = a.length,
+    N = b.length;
   const MAX = M + N;
 
   interface LongestPosition {
     [index: number]: number;
   }
-  let v: LongestPosition = { 1: 0 };
+  const v: LongestPosition = { 1: 0 };
 
   for (let d = 0; d <= MAX; ++d) {
     for (let k = -d; k <= d; k += 2) {
       let x: number;
-      if (k === -d || k !== d && v[k - 1] + 1 < v[k + 1]) {
+      if (k === -d || (k !== d && v[k - 1] + 1 < v[k + 1])) {
         x = v[k + 1];
       } else {
         x = v[k - 1] + 1;
       }
       let y = x - k;
-      while (x < M && y < N && compareFunc(a[x] , b[y])) {
+      while (x < M && y < N && compareFunc(a[x], b[y])) {
         x++;
         y++;
       }
@@ -37,37 +36,51 @@ enum Direct {
   horizontal = 1,
   vertical = 1 << 1,
   diagonal = 1 << 2,
-  all = horizontal | vertical | diagonal
+  all = horizontal | vertical | diagonal,
 }
 
 function getSolution<T>(
-  a: T[], aStart: number, aEnd: number,
-  b: T[], bStart: number, bEnd: number,
+  a: T[],
+  aStart: number,
+  aEnd: number,
+  b: T[],
+  bStart: number,
+  bEnd: number,
   d: number,
-  startDirect: Direct, endDirect: Direct,
+  startDirect: Direct,
+  endDirect: Direct,
   compareFunc: (a: T, b: T) => boolean,
-  elementsChanged: (type: "add" | "remove" | "same",
-                    a: T[], aStart: number, aEnd: number,
-                    b: T[], bStart: number, bEnd: number
-                   ) => void
+  elementsChanged: (
+    type: 'add' | 'remove' | 'same',
+    a: T[],
+    aStart: number,
+    aEnd: number,
+    b: T[],
+    bStart: number,
+    bEnd: number,
+  ) => void,
 ): void {
   if (d === 0) {
-    elementsChanged("same", a, aStart, aEnd, b, bStart, bEnd);
+    elementsChanged('same', a, aStart, aEnd, b, bStart, bEnd);
     return;
-  } else if (d === (aEnd - aStart) + (bEnd - bStart)) {
-    let removeFirst = ((startDirect & Direct.horizontal) ? 1 : 0 ) + ((endDirect & Direct.vertical) ? 1 : 0 );
-    let addFirst = ((startDirect & Direct.vertical) ? 1 : 0 ) + ((endDirect & Direct.horizontal) ? 1 : 0 );
+  } else if (d === aEnd - aStart + (bEnd - bStart)) {
+    const removeFirst =
+      (startDirect & Direct.horizontal ? 1 : 0) + (endDirect & Direct.vertical ? 1 : 0);
+    const addFirst =
+      (startDirect & Direct.vertical ? 1 : 0) + (endDirect & Direct.horizontal ? 1 : 0);
     if (removeFirst >= addFirst) {
-      aStart !== aEnd && elementsChanged("remove", a, aStart, aEnd, b, bStart, bStart);
-      bStart !== bEnd && elementsChanged("add", a, aEnd, aEnd, b, bStart, bEnd);
+      aStart !== aEnd && elementsChanged('remove', a, aStart, aEnd, b, bStart, bStart);
+      bStart !== bEnd && elementsChanged('add', a, aEnd, aEnd, b, bStart, bEnd);
     } else {
-      bStart !== bEnd && elementsChanged("add", a, aStart, aStart, b, bStart, bEnd);
-      aStart !== aEnd && elementsChanged("remove", a, aStart, aEnd, b, bEnd, bEnd);
+      bStart !== bEnd && elementsChanged('add', a, aStart, aStart, b, bStart, bEnd);
+      aStart !== aEnd && elementsChanged('remove', a, aStart, aEnd, b, bEnd, bEnd);
     }
     return;
   }
 
-  let M = aEnd - aStart, N = bEnd - bStart, HALF = Math.floor(N / 2);
+  const M = aEnd - aStart;
+  const N = bEnd - bStart;
+  let HALF = Math.floor(N / 2);
 
   interface PointInfo {
     d: number;
@@ -81,17 +94,17 @@ function getSolution<T>(
 
   let now: PointInfoMap = {};
   for (let k = -d - 1; k <= d + 1; ++k) {
-    now[k] = {d: Infinity, segments: 0, direct: Direct.none};
+    now[k] = { d: Infinity, segments: 0, direct: Direct.none };
   }
   let preview: PointInfoMap = {
-    [-d - 1]: {d: Infinity, segments: 0, direct: Direct.none},
-    [d + 1]:  {d: Infinity, segments: 0, direct: Direct.none},
+    [-d - 1]: { d: Infinity, segments: 0, direct: Direct.none },
+    [d + 1]: { d: Infinity, segments: 0, direct: Direct.none },
   };
 
   for (let y = 0; y <= HALF; ++y) {
     [now, preview] = [preview, now];
     for (let k = -d; k <= d; ++k) {
-      let x = y + k;
+      const x = y + k;
 
       if (y === 0 && x === 0) {
         now[k] = {
@@ -102,15 +115,18 @@ function getSolution<T>(
         continue;
       }
 
-      let currentPoints: PointInfo[] = [{
-        direct: Direct.horizontal,
-        d: now[k - 1].d + 1,
-        segments: now[k - 1].segments + (now[k - 1].direct & Direct.horizontal ? 0 : 1),
-      }, {
-        direct: Direct.vertical,
-        d: preview[k + 1].d + 1,
-        segments: preview[k + 1].segments + (preview[k + 1].direct & Direct.vertical ? 0 : 1),
-      }];
+      const currentPoints: PointInfo[] = [
+        {
+          direct: Direct.horizontal,
+          d: now[k - 1].d + 1,
+          segments: now[k - 1].segments + (now[k - 1].direct & Direct.horizontal ? 0 : 1),
+        },
+        {
+          direct: Direct.vertical,
+          d: preview[k + 1].d + 1,
+          segments: preview[k + 1].segments + (preview[k + 1].direct & Direct.vertical ? 0 : 1),
+        },
+      ];
 
       if (x > 0 && x <= M && y > 0 && y <= N && compareFunc(a[aStart + x - 1], b[bStart + y - 1])) {
         currentPoints.push({
@@ -120,7 +136,7 @@ function getSolution<T>(
         });
       }
 
-      let bestValue = currentPoints.reduce((best, info) => {
+      const bestValue = currentPoints.reduce((best, info) => {
         if (best.d > info.d) {
           return info;
         } else if (best.d === info.d && best.segments > info.segments) {
@@ -129,7 +145,7 @@ function getSolution<T>(
         return best;
       });
 
-      currentPoints.forEach(info => {
+      currentPoints.forEach((info) => {
         if (bestValue.d === info.d && bestValue.segments === info.segments) {
           bestValue.direct |= info.direct;
         }
@@ -140,17 +156,17 @@ function getSolution<T>(
 
   let now2: PointInfoMap = {};
   for (let k = -d - 1; k <= d + 1; ++k) {
-    now2[k] = {d: Infinity, segments: 0, direct: Direct.none};
+    now2[k] = { d: Infinity, segments: 0, direct: Direct.none };
   }
   let preview2: PointInfoMap = {
-    [-d - 1]: {d: Infinity, segments: 0, direct: Direct.none},
-    [d + 1]:  {d: Infinity, segments: 0, direct: Direct.none},
+    [-d - 1]: { d: Infinity, segments: 0, direct: Direct.none },
+    [d + 1]: { d: Infinity, segments: 0, direct: Direct.none },
   };
 
   for (let y = N; y >= HALF; --y) {
     [now2, preview2] = [preview2, now2];
     for (let k = d; k >= -d; --k) {
-      let x = y + k;
+      const x = y + k;
 
       if (y === N && x === M) {
         now2[k] = {
@@ -161,15 +177,18 @@ function getSolution<T>(
         continue;
       }
 
-      let currentPoints: PointInfo[] = [{
-        direct: Direct.horizontal,
-        d: now2[k + 1].d + 1,
-        segments: now2[k + 1].segments + (now2[k + 1].direct & Direct.horizontal ? 0 : 1),
-      }, {
-        direct: Direct.vertical,
-        d: preview2[k - 1].d + 1,
-        segments: preview2[k - 1].segments + (preview2[k - 1].direct & Direct.vertical ? 0 : 1),
-      }];
+      const currentPoints: PointInfo[] = [
+        {
+          direct: Direct.horizontal,
+          d: now2[k + 1].d + 1,
+          segments: now2[k + 1].segments + (now2[k + 1].direct & Direct.horizontal ? 0 : 1),
+        },
+        {
+          direct: Direct.vertical,
+          d: preview2[k - 1].d + 1,
+          segments: preview2[k - 1].segments + (preview2[k - 1].direct & Direct.vertical ? 0 : 1),
+        },
+      ];
 
       if (x >= 0 && x < M && y >= 0 && y < N && compareFunc(a[aStart + x], b[bStart + y])) {
         currentPoints.push({
@@ -179,7 +198,7 @@ function getSolution<T>(
         });
       }
 
-      let bestValue = currentPoints.reduce((best, info) => {
+      const bestValue = currentPoints.reduce((best, info) => {
         if (best.d > info.d) {
           return info;
         } else if (best.d === info.d && best.segments > info.segments) {
@@ -188,7 +207,7 @@ function getSolution<T>(
         return best;
       });
 
-      currentPoints.forEach(info => {
+      currentPoints.forEach((info) => {
         if (bestValue.d === info.d && bestValue.segments === info.segments) {
           bestValue.direct |= info.direct;
         }
@@ -196,28 +215,34 @@ function getSolution<T>(
       now2[k] = bestValue;
     }
   }
-  let best = {
+  const best = {
     k: -1,
     d: Infinity,
     segments: 0,
     direct: Direct.none,
   };
 
-  for (let k = -d; k <= d; ++ k) {
-    let dSum = now[k].d + now2[k].d;
+  for (let k = -d; k <= d; ++k) {
+    const dSum = now[k].d + now2[k].d;
     if (dSum < best.d) {
       best.k = k;
       best.d = dSum;
-      best.segments = now[k].segments + now2[k].segments + (now[k].segments & now2[k].segments ? 0 : 1);
+      best.segments =
+        now[k].segments + now2[k].segments + (now[k].segments & now2[k].segments ? 0 : 1);
       best.direct = now2[k].direct;
     } else if (dSum === best.d) {
-      let segments = now[k].segments + now2[k].segments + (now[k].segments & now2[k].segments ? 0 : 1);
+      const segments =
+        now[k].segments + now2[k].segments + (now[k].segments & now2[k].segments ? 0 : 1);
       if (segments < best.segments) {
         best.k = k;
         best.d = dSum;
         best.segments = segments;
         best.direct = now2[k].direct;
-      } else if (segments === best.segments && !(best.direct & Direct.diagonal) && (now2[k].direct & Direct.diagonal)) {
+      } else if (
+        segments === best.segments &&
+        !(best.direct & Direct.diagonal) &&
+        now2[k].direct & Direct.diagonal
+      ) {
         best.k = k;
         best.d = dSum;
         best.segments = segments;
@@ -232,19 +257,60 @@ function getSolution<T>(
     now2[best.k].direct = preview2[best.k].direct;
   }
 
-  getSolution(a, aStart, aStart + HALF + best.k, b, bStart, bStart + HALF,
-              now[best.k].d, startDirect, now2[best.k].direct, compareFunc, elementsChanged);
-  getSolution(a, aStart + HALF + best.k, aEnd, b, bStart + HALF, bEnd,
-              now2[best.k].d, now[best.k].direct, endDirect, compareFunc, elementsChanged);
+  getSolution(
+    a,
+    aStart,
+    aStart + HALF + best.k,
+    b,
+    bStart,
+    bStart + HALF,
+    now[best.k].d,
+    startDirect,
+    now2[best.k].direct,
+    compareFunc,
+    elementsChanged,
+  );
+  getSolution(
+    a,
+    aStart + HALF + best.k,
+    aEnd,
+    b,
+    bStart + HALF,
+    bEnd,
+    now2[best.k].d,
+    now[best.k].direct,
+    endDirect,
+    compareFunc,
+    elementsChanged,
+  );
 }
 
 export default function bestSubSequence<T>(
-  a: T[], b: T[], compareFunc: (a: T, b: T) => boolean,
-  elementsChanged: (type: "add" | "remove" | "same",
-                    a: T[], aStart: number, aEnd: number,
-                    b: T[], bStart: number, bEnd: number
-                   ) => void
+  a: T[],
+  b: T[],
+  compareFunc: (a: T, b: T) => boolean,
+  elementsChanged: (
+    type: 'add' | 'remove' | 'same',
+    a: T[],
+    aStart: number,
+    aEnd: number,
+    b: T[],
+    bStart: number,
+    bEnd: number,
+  ) => void,
 ): void {
-  let d = lcs(a, b, compareFunc);
-  getSolution(a, 0, a.length, b, 0, b.length, d, Direct.diagonal, Direct.all, compareFunc, elementsChanged);
+  const d = lcs(a, b, compareFunc);
+  getSolution(
+    a,
+    0,
+    a.length,
+    b,
+    0,
+    b.length,
+    d,
+    Direct.diagonal,
+    Direct.all,
+    compareFunc,
+    elementsChanged,
+  );
 }

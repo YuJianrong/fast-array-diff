@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-- '4'
+  - "14"
 before_script: npm run clean
 script:
-- npm run build
-- npm run tslint
-- npm run coverage
-after_success: 
-- ./node_modules/.bin/remap-istanbul -i coverage/coverage.json -t lcovonly | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+  - npm run build
+  - npm run tslint
+  - npm run coverage
+after_success:
+  - ./node_modules/.bin/remap-istanbul -i coverage/coverage.json -t lcovonly | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 before_deply: npm run clean-test
 deploy:
   provider: npm

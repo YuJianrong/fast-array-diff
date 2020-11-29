@@ -1,4 +1,19 @@
 {
-  "typescript.check.workspaceVersion": true,
-  "typescript.tsdk": "./node_modules/typescript/lib"
+  "eslint.validate": ["javascript", "typescript"],
+  "editor.rulers": [100],
+  "editor.trimAutoWhitespace": true,
+  "editor.formatOnSave": true,
+
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "typescript.implementationsCodeLens.enabled": true,
+  "debug.javascript.usePreview": false,
+  "eslint.format.enable": true
 }

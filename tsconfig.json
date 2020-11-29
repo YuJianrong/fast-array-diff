@@ -1,17 +1,14 @@
 {
-    "include": [
-      "src/**/*.ts"
-    ],
-    "compilerOptions": {
-        "noImplicitAny": true,
-        "declaration": true,
-        "strictNullChecks": true,
-        "target": "es5",
-        "lib": ["es5", "dom", "es2015.core"],
-        "module": "commonjs",
-        "typeRoots": [ "node_modules/@types/" ],
-        "moduleResolution": "node",
-        "outDir": "dist",
-        "stripInternal": true
-    }
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["dom", "es2015.core"],
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true
+  }
 }
