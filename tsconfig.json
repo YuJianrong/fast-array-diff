@@ -6,7 +6,6 @@
     "moduleResolution": "node",
     "lib": ["dom", "es2015.core"],
     "declaration": true,
-    "sourceMap": true,
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true

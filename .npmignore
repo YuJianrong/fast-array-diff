@@ -2,13 +2,12 @@ node_modules
 src
 coverage
 dist/test
+esm/test
 dist_map
-gulpfile.js
 *.log
 tsconfig.json
-tslint.json
+.eslintrc.json
 .npmrc
 .travis.yml
 .gitignore
 .vscode
-umd
