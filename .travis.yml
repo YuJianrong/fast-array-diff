@@ -4,14 +4,18 @@ node_js:
 before_script: npm run clean
 script:
   - npm run lint
-  - npm run coverage
   - npm run build
 after_success:
-  - ./node_modules/.bin/remap-istanbul -i coverage/coverage.json -t lcovonly | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
-before_deply: npm run clean-test
+  - npm run coverage
+  - "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -t lcovonly | ./node_modules/coveralls/bin/coveralls.js
+    && rm -rf ./coverage"
+before_deploy: npm run clean-test
 deploy:
   provider: npm
-  skip_cleanup: true
-  email: "yujianrong@gmail.com"
+  email: yujianrong@gmail.com
   api_key:
-    secure: Ie2o0OvCXn2ZFmqB0y784DFmSiAwo/8r6falAuzsfmRsNXHWTofAFOFR0WCb3R+RxXAJGfGPhuyb56QEHENb3yV6RtNYR22hla5TlaVXhR/dLOaa2qfyyeaZ6YU5S510uURrTIbQLbtuTXDSb1NQnL3shRcH5ZefC/7mXCUQXowh4VfRxxABqnmuII67B+fPk/QrV1WlrOQ5b9Q7irIyJ1oDSEvkwhx3hKtXyVieLb23t2CqSZb4uUA3Avfa92e7GuiBF8HV2UvYuV0EoTR2IIUdRyiNdIwFu2tBkoat45hZoESXxwk+NYmLffcRGWLmvM6xuztk2PWoP/sWcpS2bvnXjn2hHSYlaFosf2HN8Q603UNI4dJH5WEk1WTk9yzBuHeC3KXRHOWIBFWAYOW+y4xKd51INYSFSeLxTX5XFSmgKJtCGr3E0dxcgJADE7f8jMKKEmUMZd6R6m1FheKk7i6aBd3NoREouonu/LI5sgdjlfzj99ba1REdpmNa1meBpSpNclpsQ/PVsvWxE6Ul4vB0nZsi0yQQN/QMeLfvJq88VSzwa9VJ3d5wkQN0zq41zVBeyM67mpGdffKKo+wBs1SJi2ZW+N46zRgK5xYBaS/2t8MEVXRmAh2iauWITVd3qy8JzqrBFg0OrR9SCmSIFT3PzSJNlpoxLJLQrsLVj78=
+    secure: oMY0IWBN49x7myS9TXYLZOmz/Xw9KbsRRSRe1O73DWAMrFbQic5y0JOMrWRY5FEGBYz2B12N+5E2t9xB511ldgY12Ru5wKXTWX7e38ENs8dub46rNdUe8es2NOtDleQMM2VFX94SvJrkzSKY5cvmTjtovn6XzBqwqpEMVIykuVa2F42L3tf9jQTPGYnXbkbFMipKSQwd2UfVGr4+U2LgcO8VsJ0c5+lgUVP8GqT5cp31FZ1t6QAdgXbGrhFDjBWSYH8b4ltQVYL2UGozSSMgcTd2FjML/GllDHRYeXGRrrTCkx6oaSyuG7fT0h5NJ/6Yt5vx0JQgL9pEd2iJTSXZicsiAlz9KWpD4ugAllzIvPILSAsuvrDxVfKvwi1aEid9qvvq/lO3p5peHna3tyeH2W91yR0PpcwJF55FvWPjFepRYg3epD0HQ8EPnT2iU0N2xu+UvZBS+QQB3QLOXDkYk/RDF41uoIABuId8EJy5DZxcqfNDOcgCbga6FFBeRW5W3UPoEb8eWZUg3X+G4u8gAUeBfeQ+VLf8BYj1rCn9yJiFcZTZsr9CwP/nEukbNV/2XhBHAc0R4f3W4lSvc0HMzHrDJkZcEkT7s7wEeWGk3yEzzS2V8tDLXJW8nlib6lLwAhi/u2mjVJ5vRX/ejSaXc7DHdqLWs359f9rTsrK/5kw=
+  on:
+    tags: true
+    repo: YuJianrong/fast-array-diff
+  skip_cleanup: "true"
