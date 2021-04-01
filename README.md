@@ -153,6 +153,10 @@ This module is licensed under MIT.
 
 - 1.0.0:
 
+  - Fix for Security Vulnerability on dependencies
+
+- 1.0.0:
+
   - Update Typescript to 4.x
   - Remove `browsersify`
   - Export both esm and commonjs packages

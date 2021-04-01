@@ -1,6 +1,6 @@
 {
   "name": "fast-array-diff",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
   "homepage": "https://github.com/YuJianrong/fast-array-diff",
   "bugs": {
