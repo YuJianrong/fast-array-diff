@@ -151,7 +151,7 @@ This module is licensed under MIT.
 
 ### Changelog
 
-- 1.0.0:
+- 1.0.1:
 
   - Fix for Security Vulnerability on dependencies
 
