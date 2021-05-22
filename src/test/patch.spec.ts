@@ -19,7 +19,7 @@ describe('Get Patch', () => {
         type: 'add',
         oldPos,
         newPos,
-        items: str.split(''),
+        items: [...str],
       };
     }
     function remove(oldPos: number, newPos: number, str: string): es.PatchItem<string> {
@@ -27,11 +27,11 @@ describe('Get Patch', () => {
         type: 'remove',
         oldPos,
         newPos,
-        items: str.split(''),
+        items: [...str],
       };
     }
     function es_str(a: string, b: string, script: es.Patch<string>, msg?: string) {
-      assert.deepStrictEqual(es.getPatch(a.split(''), b.split('')), script, msg);
+      assert.deepStrictEqual(es.getPatch([...a], [...b]), script, msg);
     }
 
     es_str('', '', [], 'empty');
@@ -103,5 +103,7 @@ describe('Get Patch', () => {
       [add(12, 12, '12345678901234567890')],
       'remove 12345678901234567890',
     );
+
+    es_str('💢💩💧', '💢💫💧', [remove(1, 1, '💩'), add(2, 1, '💫')], 'works with unicodes');
   });
 });
