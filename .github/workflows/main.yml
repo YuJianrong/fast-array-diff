@@ -23,6 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
+      - run: npm run coverage
       - run: npx remap-istanbul -i coverage/coverage.json -t lcovonly > ./coverage/ts.info
       - name: Coveralls
         uses: coverallsapp/github-action@master
