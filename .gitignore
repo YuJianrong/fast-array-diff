@@ -29,3 +29,5 @@ esm
 .vscode/launch.json
 .npmrc
 umd
+
+.DS_Store

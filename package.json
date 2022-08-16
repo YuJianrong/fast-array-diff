@@ -1,6 +1,6 @@
 {
   "name": "fast-array-diff",
-  "version": "1.0.1",
+  "version": "0.0.0-semantic-release",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
   "homepage": "https://github.com/YuJianrong/fast-array-diff",
   "bugs": {
@@ -12,12 +12,14 @@
   "scripts": {
     "clean": "rm -rf dist esm; rm -rf coverage; rm -rf dist_map",
     "clean-test": "rm -rf dist/test esm/test dist_map",
+    "commit": "cz",
     "prebuild": "npm run clean",
     "build": "tsc && tsc -p tsconfig-esm.json",
     "test": "mocha dist/test/*.spec.js",
     "coverage": "tsc --sourceMap --outDir dist_map && istanbul cover node_modules/.bin/_mocha -- dist_map/test/*.spec.js",
     "debug": "npm run build && npm run test -- --debug-brk",
-    "lint": "eslint './src/**/*.ts' --max-warnings 0"
+    "lint": "eslint './src/**/*.ts' --max-warnings 0",
+    "prepare": "husky install"
   },
   "keywords": [
     "array",
@@ -26,28 +28,26 @@
   "author": "Jianrong Yu <yujianrong@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@types/mocha": "^8.0.4",
     "@types/node": "^14.14.10",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "chai": "^4.2.0",
+    "commitizen": "^4.2.5",
     "coveralls": "^3.1.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
+    "husky": "^7.0.0",
     "istanbul": "^0.4.5",
     "lint-staged": "^10.5.2",
     "mocha": "^8.2.1",
     "prettier": "^2.2.1",
     "remap-istanbul": "^0.13.0",
     "typescript": "^4.1.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
-    }
   },
   "lint-staged": {
     "*.{json,md,less,yaml,yml}": [
@@ -56,5 +56,10 @@
     "*.{ts,tsx}": [
       "eslint --fix --max-warnings 0"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
