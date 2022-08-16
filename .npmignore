@@ -5,9 +5,13 @@ dist/test
 esm/test
 dist_map
 *.log
-tsconfig.json
+tsconfig*.json
 .eslintrc.json
 .npmrc
 .travis.yml
 .gitignore
 .vscode
+release.config.js
+.husky
+.github
+commitlint.config.js
