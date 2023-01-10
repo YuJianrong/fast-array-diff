@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: "npm"
-          node-version: 16.x
+          node-version: 18.x
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -48,7 +48,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: "npm"
-          node-version: 16.x
+          node-version: 18.x
       - run: npm ci
       - name: Install semantic-release extra plugins
         run: npm install --save-dev @semantic-release/changelog @semantic-release/git
