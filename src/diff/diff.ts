@@ -1,16 +1,16 @@
 import bestSubSequence from './lcs';
 
-export interface DiffData<T> {
+export interface DiffData<T, U = T> {
   removed: T[];
-  added: T[];
+  added: U[];
 }
 
-export function diff<T>(
+export function diff<T, U = T>(
   a: T[],
-  b: T[],
-  compareFunc: (ia: T, ib: T) => boolean = (ia: T, ib: T) => ia === ib,
-): DiffData<T> {
-  const ret: DiffData<T> = {
+  b: U[],
+  compareFunc: (ia: T, ib: U) => boolean = (ia: T, ib: U) => ia === (ib as unknown as T),
+): DiffData<T, U> {
+  const ret: DiffData<T, U> = {
     removed: [],
     added: [],
   };
