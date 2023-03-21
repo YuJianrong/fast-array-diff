@@ -1,4 +1,4 @@
-function lcs<T>(a: T[], b: T[], compareFunc: (a: T, b: T) => boolean): number {
+function lcs<T, U = T>(a: T[], b: U[], compareFunc: (a: T, b: U) => boolean): number {
   const M = a.length,
     N = b.length;
   const MAX = M + N;
@@ -39,23 +39,23 @@ enum Direct {
   all = horizontal | vertical | diagonal,
 }
 
-function getSolution<T>(
+function getSolution<T, U = T>(
   a: T[],
   aStart: number,
   aEnd: number,
-  b: T[],
+  b: U[],
   bStart: number,
   bEnd: number,
   d: number,
   startDirect: Direct,
   endDirect: Direct,
-  compareFunc: (a: T, b: T) => boolean,
+  compareFunc: (a: T, b: U) => boolean,
   elementsChanged: (
     type: 'add' | 'remove' | 'same',
     a: T[],
     aStart: number,
     aEnd: number,
-    b: T[],
+    b: U[],
     bStart: number,
     bEnd: number,
   ) => void,
@@ -285,16 +285,16 @@ function getSolution<T>(
   );
 }
 
-export default function bestSubSequence<T>(
+export default function bestSubSequence<T, U = T>(
   a: T[],
-  b: T[],
-  compareFunc: (a: T, b: T) => boolean,
+  b: U[],
+  compareFunc: (a: T, b: U) => boolean,
   elementsChanged: (
     type: 'add' | 'remove' | 'same',
     a: T[],
     aStart: number,
     aEnd: number,
-    b: T[],
+    b: U[],
     bStart: number,
     bEnd: number,
   ) => void,

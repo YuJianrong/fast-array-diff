@@ -144,4 +144,16 @@ describe('Same', () => {
       ];
     assert.deepStrictEqual(same(a, b, compare), result);
   });
+
+  it('Functional test on arrays of different types', () => {
+    assert.deepStrictEqual(
+      same([1, 2, 3], ['2', '3', '4'], (l, r) => {
+        assert.equal(typeof l, 'number');
+        assert.equal(typeof r, 'string');
+
+        return l.toString() === r;
+      }),
+      [2, 3],
+    );
+  });
 });

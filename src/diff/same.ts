@@ -1,9 +1,9 @@
 import bestSubSequence from './lcs';
 
-export default function <T>(
+export default function <T, U = T>(
   a: T[],
-  b: T[],
-  compareFunc: (ia: T, ib: T) => boolean = (ia: T, ib: T) => ia === ib,
+  b: U[],
+  compareFunc: (ia: T, ib: U) => boolean = (ia: T, ib: U) => ia === (ib as unknown as T),
 ): T[] {
   const ret: T[] = [];
   bestSubSequence(a, b, compareFunc, (type, oldArr, oldStart, oldEnd) => {
