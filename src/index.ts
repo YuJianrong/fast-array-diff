@@ -1,5 +1,6 @@
+import bestSubSequence from './diff/lcs';
 import same from './diff/same';
-export { same };
+export { bestSubSequence, same };
 
 export * from './diff/diff';
 

@@ -63,4 +63,16 @@ describe('Diff', () => {
       '',
     );
   });
+
+  it('Functional test on arrays of different types', () => {
+    assert.deepStrictEqual(
+      diff.diff([1, 2, 3], ['2', '3', '4'], (l, r) => {
+        assert.equal(typeof l, 'number');
+        assert.equal(typeof r, 'string');
+
+        return l.toString() === r;
+      }),
+      { added: ['4'], removed: [1] },
+    );
+  });
 });
