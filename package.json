@@ -1,6 +1,6 @@
 {
   "name": "fast-array-diff",
-  "version": "0.0.0-semantic-release",
+  "version": "1.1.0",
   "description": "Implementation of paper 'An O(ND) Difference Algorithm and Its Variations' on array",
   "homepage": "https://github.com/YuJianrong/fast-array-diff",
   "bugs": {
@@ -30,6 +30,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "@semantic-release/changelog": "^6.0.2",
+    "@semantic-release/git": "^10.0.1",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.7.5",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
