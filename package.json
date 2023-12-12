@@ -33,9 +33,9 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.10.3",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
+    "@types/node": "^20.10.4",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
     "chai": "^4.3.10",
     "commitizen": "^4.3.0",
     "coveralls": "^3.1.1",
@@ -47,9 +47,9 @@
     "istanbul": "^0.4.5",
     "lint-staged": "^15.2.0",
     "mocha": "^10.2.0",
-    "prettier": "^3.1.0",
+    "prettier": "^3.1.1",
     "remap-istanbul": "^0.13.0",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3"
   },
   "lint-staged": {
     "*.{json,md,less,yaml,yml}": [
