@@ -18,7 +18,9 @@ export function applyPatch<T>(a: T[], patch: Apply<T>): T[] {
 
   for (let i = 0; i < patch.length; ++i) {
     const patchItem = patch[i];
-    sameStart !== patchItem.oldPos && segments.push(a.slice(sameStart, patchItem.oldPos));
+    if (sameStart !== patchItem.oldPos) {
+      segments.push(a.slice(sameStart, patchItem.oldPos));
+    }
     if (patchItem.type === 'add') {
       segments.push(patchItem.items);
       sameStart = patchItem.oldPos;
@@ -28,7 +30,9 @@ export function applyPatch<T>(a: T[], patch: Apply<T>): T[] {
       sameStart = patchItem.oldPos + (<{ length: number }>patchItem).length;
     }
   }
-  sameStart !== a.length && segments.push(a.slice(sameStart));
+  if (sameStart !== a.length) {
+    segments.push(a.slice(sameStart));
+  }
 
   return ([] as T[]).concat(...segments);
 }

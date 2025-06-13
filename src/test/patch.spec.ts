@@ -36,7 +36,7 @@ describe('Get Patch', () => {
 
     es_str('', '', [], 'empty');
     es_str('a', '', [remove(0, 0, 'a')], 'remove a');
-    es_str('', 'b', [add(0, 0, 'b')]), 'add b';
+    es_str('', 'b', [add(0, 0, 'b')], 'add b');
     es_str('abcd', 'e', [remove(0, 0, 'abcd'), add(4, 0, 'e')], 'for abcd-e');
     es_str('abc', 'abc', [], 'same abc');
     es_str(

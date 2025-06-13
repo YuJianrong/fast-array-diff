@@ -69,11 +69,19 @@ function getSolution<T, U = T>(
     const addFirst =
       (startDirect & Direct.vertical ? 1 : 0) + (endDirect & Direct.horizontal ? 1 : 0);
     if (removeFirst >= addFirst) {
-      aStart !== aEnd && elementsChanged('remove', a, aStart, aEnd, b, bStart, bStart);
-      bStart !== bEnd && elementsChanged('add', a, aEnd, aEnd, b, bStart, bEnd);
+      if (aStart !== aEnd) {
+        elementsChanged('remove', a, aStart, aEnd, b, bStart, bStart);
+      }
+      if (bStart !== bEnd) {
+        elementsChanged('add', a, aEnd, aEnd, b, bStart, bEnd);
+      }
     } else {
-      bStart !== bEnd && elementsChanged('add', a, aStart, aStart, b, bStart, bEnd);
-      aStart !== aEnd && elementsChanged('remove', a, aStart, aEnd, b, bEnd, bEnd);
+      if (bStart !== bEnd) {
+        elementsChanged('add', a, aStart, aStart, b, bStart, bEnd);
+      }
+      if (aStart !== aEnd) {
+        elementsChanged('remove', a, aStart, aEnd, b, bEnd, bEnd);
+      }
     }
     return;
   }

@@ -37,7 +37,7 @@ describe('Apply Patch', () => {
 
     apply_str('', '', [], 'empty');
     apply_str('a', '', [remove(0, 0, 'a')], 'remove a');
-    apply_str('', 'b', [add(0, 0, 'b')]), 'add b';
+    apply_str('', 'b', [add(0, 0, 'b')], 'add b');
     apply_str('abcd', 'e', [remove(0, 0, 'abcd'), add(4, 0, 'e')], 'for abcd-e');
     apply_str('abc', 'abc', [], 'same abc');
     apply_str(
@@ -129,7 +129,7 @@ describe('Apply Patch', () => {
 
     apply_str('', '', [], 'empty');
     apply_str('a', '', [remove(0, 0, 'a')], 'remove a');
-    apply_str('', 'b', [add(0, 0, 'b')]), 'add b';
+    apply_str('', 'b', [add(0, 0, 'b')], 'add b');
     apply_str('abcd', 'e', [remove(0, 0, 'abcd'), add(4, 0, 'e')], 'for abcd-e');
     apply_str('abc', 'abc', [], 'same abc');
     apply_str(
